@@ -1,0 +1,31 @@
+- if @error then
+	%div
+		%p Error!!!
+
+%div
+	%h1 DashBoard
+
+%div
+	%h2 GoogleAnalytics
+	- @results.each do |result|
+		%h4 日付: #{result.date}
+		%p  PV: #{result.pageviews}
+		%p  VISIT: #{result.visits}
+
+
+%div
+	%h2 リンク先一覧
+	%ul
+	- @links.each do |link|
+		%li
+			%a{:href => "#{link.url}"} #{link.name}
+			%a{:href => "/delete?id=#{link.id}"} 削除
+
+%div
+	%h2 リンク先の追加
+	%form{:action => "create", :method => "post"}
+		%label 名前:
+		%input{:type => "text", :name => "name"}
+		%label URL:
+		%input{:type => "text", :name => "url"}
+		%input{:type => "submit"}

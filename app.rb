@@ -2,11 +2,15 @@ require "sinatra"
 require "haml"
 require "garb"
 require "./db/dashboard.rb"
+require './config/analytics.rb'
 
+# BASIC認証
+use Rack::Auth::Basic do |username, password|
+	username == ANALYTICS_USERNAME && password == ANALYTICS_PASSWORD
+end
 
 
 #== Googleアナリティクスの認証
-require './config/analytics.rb'
 Garb::Session.login ANALYTICS_USERNAME, ANALYTICS_PASSWORD
 profile = Garb::Management::Profile.all.detect do |p|
   p.web_property_id == ANALYTICS_CODE
